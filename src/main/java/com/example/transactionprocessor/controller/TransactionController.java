@@ -1,20 +1,13 @@
 package com.example.transactionprocessor.controller;
 
-//import com.example.transactionprocessor.dto.JwtRequest;
-//import com.example.transactionprocessor.dto.JwtResponse;
 import com.example.transactionprocessor.dto.*;
 import com.example.transactionprocessor.model.Transactions;
 import com.example.transactionprocessor.service.TransactionService;
-//import com.example.transactionprocessor.service.UserService;
-//import com.example.transactionprocessor.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.BadCredentialsException;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -24,35 +17,9 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping("/transactions")
 public class TransactionController {
-//    @Autowired
-//    private JWTUtility jwtUtility;
 
     @Autowired
     TransactionService transactionService;
-
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    @Autowired
-//    private UserService userService;
-
-
-//    @PostMapping("/authenticate")
-//    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
-//        try {
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),jwtRequest.getPassword()));
-//        } catch (BadCredentialsException e) {
-//            throw new Exception("INVALID_CREDENTIALS", e);
-//        }
-//
-//        final UserDetails userDetails
-//                = userService.loadUserByUsername(jwtRequest.getUsername());
-//
-//        final String token =
-//                jwtUtility.generateToken(userDetails);
-//
-//        return  new JwtResponse(token);
-//    }
 
     @GetMapping(value = "/{userId}")
     List<Transactions> getTransactions(@PathVariable(name = "userId") Long userId)
@@ -61,17 +28,20 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/transactions/daterange")
-    ResponseEntity<Response> getNotificationbyDateRange(
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateto,
-            @RequestParam(required = true) Long userId) {
+    @GetMapping("")
+    ResponseEntity<Response> getTransactionsByDateBetweenAndId(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value="datefrom")     @DateTimeFormat(pattern="yyyy-MM-dd") Date datefrom,
+            @RequestParam(value="dateto")     @DateTimeFormat(pattern="yyyy-MM-dd") Date dateto)
+    {
         List<Transactions> transactions = null;
-        if (datefrom != null && dateto!=null &userId!=null) {
-            transactions = transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
-        } else {
-            transactions = transactionService.getTransactions(userId);
-        }
+        transactions = transactionService.findByDateBetweenAndId(userId,datefrom, dateto);
+
+//        if (userId!=null||datefrom != null ||dateto!=null) {
+//            transactions = transactionService.findByDateBetweenAndId(userId,datefrom, dateto);
+//        } else {
+//            transactions = transactionService.getTransactions(userId);
+//        }
         if (transactions.size() > 0) {
             return new ResponseEntity<>(new Response(ConstantsStatusCodes.success, "Transactions fetched successfully",
                     transactions, null, null), HttpStatus.OK);
@@ -82,7 +52,7 @@ public class TransactionController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/all")
     List<Transactions> getAllTransactions()
     {
         return transactionService.getAllTransactions();

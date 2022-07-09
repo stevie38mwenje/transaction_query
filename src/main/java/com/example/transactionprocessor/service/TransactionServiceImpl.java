@@ -68,8 +68,8 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Override
-    public List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId) {
-        return transactionsRepository.findByDateBetweenAndUserId(from, to,userId);
+    public List<Transactions> findByDateBetweenAndId(Long userId, Date from, Date to) {
+        return transactionsRepository.findByDateBetweenAndUserId(userId, from, to);
     }
 
 
