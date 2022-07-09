@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,4 +65,12 @@ public class TransactionServiceImpl implements TransactionService{
         user.setTransactions(userRequest.getTransactions());
         return userRepository.save(user);
     }
+
+
+    @Override
+    public List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId) {
+        return transactionsRepository.findByDateBetweenAndUserId(from, to,userId);
+    }
+
+
 }

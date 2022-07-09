@@ -5,6 +5,7 @@ import com.example.transactionprocessor.dto.UserRequest;
 import com.example.transactionprocessor.model.Transactions;
 import com.example.transactionprocessor.model.Users;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TransactionService {
@@ -15,4 +16,6 @@ public interface TransactionService {
     List<Transactions> getAllTransactions();
 
     Users createUser(UserRequest userRequest);
+
+    List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId);
 }
