@@ -1,6 +1,7 @@
 package com.example.transactionprocessor.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -23,6 +24,7 @@ public class Transactions {
     private String name;
     private String mobile;
     private String bank;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
     private Double amount;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
