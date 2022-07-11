@@ -17,5 +17,5 @@ public interface TransactionService {
 
     Users createUser(UserRequest userRequest);
 
-    List<Transactions> findByDateBetweenAndId(Long userId, Date from, Date to);
+    List<Transactions> findByDateBetweenAndId(Date from, Date to,Long userId);
 }

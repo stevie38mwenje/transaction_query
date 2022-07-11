@@ -70,21 +70,22 @@ public class TransactionServiceImpl implements TransactionService{
         return userRepository.save(user);
     }
 
-
     @Override
     public List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId) {
-       var id = userRepository.findById(userId);
-       if(id.isPresent()){
-           List<Transactions> transactions = null;
+        var id = userRepository.findById(userId);
+        if(id.isPresent()){
+            List<Transactions> transactions = null;
             if (from != null && to != null) {
                 transactions = transactionsRepository.findByDateBetweenAndUserId(from, to, userId);
             } else {
                 transactions = transactionsRepository.findTransactionsByUserId(userId);
             }
-           return transactions;
-       }
+            return transactions;
+        }
         throw new UserNotFoundException("User not found");
     }
+
+
 
 
 }
