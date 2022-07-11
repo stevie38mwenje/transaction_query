@@ -12,5 +12,6 @@ import java.util.List;
 public interface TransactionsRepository extends JpaRepository<Transactions,Long> {
     List<Transactions> findTransactionsByUserId(Long userId);
 
-    List<Transactions> findByDateBetweenAndUserId(Date from, Date to,Long userId);
+//    @Query(value="SELECT id,amount,bank,mobile,name FROM Transactions  WHERE date between :from and :to",nativeQuery = true)
+    List<Transactions> findByDateBetween(Date from, Date to);
 }

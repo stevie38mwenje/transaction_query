@@ -76,7 +76,7 @@ public class TransactionServiceImpl implements TransactionService{
         if(id.isPresent()){
             List<Transactions> transactions = null;
             if (from != null && to != null) {
-                transactions = transactionsRepository.findByDateBetweenAndUserId(from, to, userId);
+                transactions = transactionsRepository.findByDateBetween(from, to);
             } else {
                 transactions = transactionsRepository.findTransactionsByUserId(userId);
             }
@@ -85,7 +85,10 @@ public class TransactionServiceImpl implements TransactionService{
         throw new UserNotFoundException("User not found");
     }
 
-
+//    @Override
+//    public List<Transactions> findByDateBetween(Date datefrom, Date dateto) {
+//        return transactionsRepository.findByDateBetween(datefrom,dateto);
+//    }
 
 
 }

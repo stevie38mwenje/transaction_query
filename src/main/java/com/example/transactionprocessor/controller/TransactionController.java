@@ -65,9 +65,9 @@ public class TransactionController {
     List<Transactions> getNotificationbyDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateto,
-            @RequestParam(required = true) Long userId) {
-           var transactions = transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
-           return transactions;
+            @RequestParam(required = true) Long userId
+    ) {
+        return transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
     }
 
 
