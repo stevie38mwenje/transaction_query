@@ -61,24 +61,13 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/transactions/daterange")
-    ResponseEntity<Response> getNotificationbyDateRange(
+    @GetMapping("/daterange")
+    List<Transactions> getNotificationbyDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateto,
             @RequestParam(required = true) Long userId) {
-        List<Transactions> transactions = null;
-        if (datefrom != null && dateto!=null &userId!=null) {
-            transactions = transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
-        } else {
-            transactions = transactionService.getTransactions(userId);
-        }
-        if (transactions.size() > 0) {
-            return new ResponseEntity<>(new Response(ConstantsStatusCodes.success, "Transactions fetched successfully",
-                    transactions, null, null), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new Response(ConstantsStatusCodes.failed, "Failed to fetch transactions",
-                    transactions, null, null), HttpStatus.OK);
-        }
+           var transactions = transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
+           return transactions;
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.transactionprocessor.service;
 
+import com.example.transactionprocessor.dto.ConstantsStatusCodes;
+import com.example.transactionprocessor.dto.Response;
 import com.example.transactionprocessor.dto.TransactionRequest;
 import com.example.transactionprocessor.dto.UserRequest;
 import com.example.transactionprocessor.exception.UserNotFoundException;
@@ -10,6 +12,8 @@ import com.example.transactionprocessor.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -69,7 +73,17 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId) {
-        return transactionsRepository.findByDateBetweenAndUserId(from, to,userId);
+       var id = userRepository.findById(userId);
+       if(id.isPresent()){
+           List<Transactions> transactions = null;
+            if (from != null && to != null) {
+                transactions = transactionsRepository.findByDateBetweenAndUserId(from, to, userId);
+            } else {
+                transactions = transactionsRepository.findTransactionsByUserId(userId);
+            }
+           return transactions;
+       }
+        throw new UserNotFoundException("User not found");
     }
 
 
