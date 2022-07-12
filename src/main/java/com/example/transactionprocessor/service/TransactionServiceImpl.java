@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,10 +33,10 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Override
-    public List<Transactions> getTransactions(Long userId) {
-        var user = userRepository.findById(userId);
+    public List<Transactions> getTransactions(Long user_id) {
+        var user = userRepository.findById(user_id);
         if(user.isPresent()){
-            var transactions = transactionsRepository.findTransactionsByUserId(userId);
+            var transactions = transactionsRepository.findTransactionsByUserId(user_id);
             return transactions;
         }
         else throw new UserNotFoundException("User not found") ;
@@ -71,24 +72,13 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public List<Transactions> findByDateBetweenAndId(Date from, Date to, Long userId) {
+    public List<Transactions> findByDateBetweenAndUserId(Date from, Date to, Long userId) {
         var id = userRepository.findById(userId);
         if(id.isPresent()){
-            List<Transactions> transactions = null;
-            if (from != null && to != null) {
-                transactions = transactionsRepository.findByDateBetween(from, to);
-            } else {
-                transactions = transactionsRepository.findTransactionsByUserId(userId);
-            }
-            return transactions;
+            return transactionsRepository.findByDateBetweenAndUserId(from, to,userId);
         }
         throw new UserNotFoundException("User not found");
     }
-
-//    @Override
-//    public List<Transactions> findByDateBetween(Date datefrom, Date dateto) {
-//        return transactionsRepository.findByDateBetween(datefrom,dateto);
-//    }
 
 
 }

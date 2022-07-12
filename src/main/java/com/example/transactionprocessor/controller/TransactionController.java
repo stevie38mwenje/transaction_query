@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -61,13 +64,13 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/daterange")
+    @GetMapping("/search")
     List<Transactions> getNotificationbyDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateto,
             @RequestParam(required = true) Long userId
     ) {
-        return transactionService.findByDateBetweenAndId(datefrom, dateto, userId);
+        return transactionService.findByDateBetweenAndUserId(datefrom, dateto, userId);
     }
 
 
@@ -90,4 +93,5 @@ public class TransactionController {
         var new_transaction =  transactionService.createTransactions(transactionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(new_transaction);
     }
+
 }
