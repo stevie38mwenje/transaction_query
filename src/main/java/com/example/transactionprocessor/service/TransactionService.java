@@ -20,4 +20,7 @@ public interface TransactionService {
 
     List<Transactions> findByDateBetweenAndUserId(Date from, Date to,Long userId);
 
+    void deleteTransactionById(Long id);
+
+    Transactions updateTransaction(Long id, TransactionRequest transactionRequest);
 }

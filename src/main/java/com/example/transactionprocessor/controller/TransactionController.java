@@ -100,4 +100,18 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new_transaction);
     }
 
+    @PutMapping("{id}")
+    public Transactions updateTransaction(@PathVariable("id") Long id, @RequestBody TransactionRequest transactionRequest) {
+        return transactionService.updateTransaction(id, transactionRequest);
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id) {
+        transactionService.deleteTransactionById(id);
+        return new ResponseEntity<>(
+                new Response(ConstantsStatusCodes.success, "transaction deleted successfully", null, null, null),
+                HttpStatus.OK);
+    }
+
 }

@@ -1,9 +1,8 @@
 package com.example.transactionprocessor.service;
 
-import com.example.transactionprocessor.dto.ConstantsStatusCodes;
-import com.example.transactionprocessor.dto.Response;
 import com.example.transactionprocessor.dto.TransactionRequest;
 import com.example.transactionprocessor.dto.UserRequest;
+import com.example.transactionprocessor.exception.CustomException;
 import com.example.transactionprocessor.exception.UserNotFoundException;
 import com.example.transactionprocessor.model.Transactions;
 import com.example.transactionprocessor.model.Users;
@@ -12,14 +11,12 @@ import com.example.transactionprocessor.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -80,5 +77,31 @@ public class TransactionServiceImpl implements TransactionService{
         throw new UserNotFoundException("User not found");
     }
 
+    @Override
+    public void deleteTransactionById(Long id) {
+        Optional<Transactions> tran = transactionsRepository.findById(id);
+        if (tran.isPresent()) {
+            transactionsRepository.deleteById(id);
+        }else {
+            throw new CustomException("Transaction not found");
+        }
 
+    }
+
+    @Override
+    public Transactions updateTransaction(Long id, TransactionRequest transactionRequest) {
+        Optional<Transactions> tran = transactionsRepository.findById(id);
+        if (tran.isPresent()) {
+            Transactions transaction = new Transactions();
+            transaction.setAmount(transactionRequest.getAmount());
+            transaction.setBank(transactionRequest.getBank());
+            transaction.setDate(date);
+            transaction.setMobile(transactionRequest.getMobile());
+            transaction.setName(transactionRequest.getName());
+            transaction.setUser(transactionRequest.getUser());
+            return transactionsRepository.save(transaction);
+        } else {
+            throw new CustomException("transaction not found");
+        }
+    }
 }

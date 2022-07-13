@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
 
         //Logic to get the user form the Database
 
-        //return new User(jwtRequest.getUsername(), jwtRequest.getPassword(), new ArrayList<>());
-        return new User("admin", "password", new ArrayList<>());
+        return new User(jwtRequest.getUsername(), jwtRequest.getPassword(), new ArrayList<>());
+        //return new User("admin", "password", new ArrayList<>());
     }
 }
