@@ -104,4 +104,17 @@ public class TransactionServiceImpl implements TransactionService{
             throw new CustomException("transaction not found");
         }
     }
+
+    @Override
+    public double getUserBalance(Long id) {
+        var user = userRepository.findById(id);
+        logger.info("user",user);
+        if(user.isPresent()){
+            var balance = user.get().getBalance();
+            return balance;
+        }
+        throw new UserNotFoundException("user not found");
+    }
+
+
 }

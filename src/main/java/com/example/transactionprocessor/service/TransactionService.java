@@ -23,4 +23,7 @@ public interface TransactionService {
     void deleteTransactionById(Long id);
 
     Transactions updateTransaction(Long id, TransactionRequest transactionRequest);
+
+
+    double getUserBalance(Long id);
 }
