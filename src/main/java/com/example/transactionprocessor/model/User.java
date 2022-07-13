@@ -18,12 +18,15 @@ import java.util.List;
 @ToString
 @Accessors(chain = true)
 @Entity
-public class Users {
+@Table(name="users")
+public class User {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String username;
+    private String password;
     private Double balance;
     @JsonIgnore
     @OneToMany(mappedBy ="user" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)

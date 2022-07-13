@@ -1,6 +1,6 @@
 package com.example.transactionprocessor.dto;
 
-import com.example.transactionprocessor.model.Users;
+import com.example.transactionprocessor.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +18,5 @@ public class TransactionRequest {
     private String bank;
     private Date date;
     private Double amount;
-    private Users user;
+    private User user;
 }

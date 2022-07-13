@@ -5,7 +5,7 @@ import com.example.transactionprocessor.dto.UserRequest;
 import com.example.transactionprocessor.exception.CustomException;
 import com.example.transactionprocessor.exception.UserNotFoundException;
 import com.example.transactionprocessor.model.Transactions;
-import com.example.transactionprocessor.model.Users;
+import com.example.transactionprocessor.model.User;
 import com.example.transactionprocessor.repository.TransactionsRepository;
 import com.example.transactionprocessor.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +50,11 @@ public class TransactionServiceImpl implements TransactionService{
         transaction.setName(transactionRequest.getName());
         transaction.setUser(transactionRequest.getUser());
         logger.info("Persisting transaction data: {}", transaction);
+
+        var amount  = transaction.getAmount();
+        var user = transaction.getUser();
+        updateBalance(user,amount);
+
         return transactionsRepository.save(transaction);
     }
 
@@ -59,9 +64,9 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public Users createUser(UserRequest userRequest) {
+    public User createUser(UserRequest userRequest) {
         logger.info("Persisting user data: {}", userRequest);
-       Users user = new Users();
+       User user = new User();
         user.setName(userRequest.getName());
         user.setBalance(userRequest.getBalance());
         user.setTransactions(userRequest.getTransactions());
@@ -116,5 +121,12 @@ public class TransactionServiceImpl implements TransactionService{
         throw new UserNotFoundException("user not found");
     }
 
+    private double updateBalance(User user, Double amount){
+        Transactions transaction = new Transactions();
+        double balance =user.getBalance();
+        balance +=transaction.getAmount();
+        logger.info("Updating user balance: {}",balance);
+        return balance;
+    }
 
 }

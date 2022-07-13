@@ -1,31 +1,19 @@
 package com.example.transactionprocessor.controller;
 
-//import com.example.transactionprocessor.dto.JwtRequest;
-//import com.example.transactionprocessor.dto.JwtResponse;
 import com.example.transactionprocessor.dto.*;
 import com.example.transactionprocessor.model.Transactions;
 import com.example.transactionprocessor.service.TransactionService;
-//import com.example.transactionprocessor.service.UserService;
-//import com.example.transactionprocessor.utility.JWTUtility;
-import com.example.transactionprocessor.service.UserService;
+import com.example.transactionprocessor.service.CustomUserDetailService;
 import com.example.transactionprocessor.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.BadCredentialsException;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +31,7 @@ public class TransactionController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserService userService;
+    private CustomUserDetailService userService;
 
 
     @PostMapping("/authenticate")

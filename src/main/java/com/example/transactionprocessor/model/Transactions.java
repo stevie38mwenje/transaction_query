@@ -32,6 +32,6 @@ public class Transactions {
     @JsonBackReference
     @JoinColumn(name="user_id", nullable=false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Users user;
+    private User user;
 
 }

@@ -1,6 +1,6 @@
 package com.example.transactionprocessor.filter;
 
-import com.example.transactionprocessor.service.UserService;
+import com.example.transactionprocessor.service.CustomUserDetailService;
 import com.example.transactionprocessor.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private JWTUtility jwtUtility;
 
     @Autowired
-    private UserService userService;
+    private CustomUserDetailService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

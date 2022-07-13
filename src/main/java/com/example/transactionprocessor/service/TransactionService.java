@@ -3,9 +3,8 @@ package com.example.transactionprocessor.service;
 import com.example.transactionprocessor.dto.TransactionRequest;
 import com.example.transactionprocessor.dto.UserRequest;
 import com.example.transactionprocessor.model.Transactions;
-import com.example.transactionprocessor.model.Users;
+import com.example.transactionprocessor.model.User;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface TransactionService {
 
     List<Transactions> getAllTransactions();
 
-    Users createUser(UserRequest userRequest);
+    User createUser(UserRequest userRequest);
 
     List<Transactions> findByDateBetweenAndUserId(Date from, Date to,Long userId);
 
