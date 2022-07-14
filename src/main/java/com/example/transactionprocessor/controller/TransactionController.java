@@ -112,7 +112,7 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/balance/{id}")
+    @GetMapping("user/balance/{id}")
     ResponseEntity<Response> getUserbalance(@PathVariable("id") Long id) {
         double balance =transactionService.getUserBalance(id);
         return new ResponseEntity<>(new Response(ConstantsStatusCodes.success, "Balance fetched successful", null,
