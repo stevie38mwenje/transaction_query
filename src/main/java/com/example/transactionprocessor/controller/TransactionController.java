@@ -58,7 +58,6 @@ public class TransactionController {
         return transactionService.getTransactions(userId);
     }
 
-
     @GetMapping("transactions/search")
     List<Transactions> getNotificationbyDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
