@@ -95,16 +95,6 @@ public class TransactionController {
         return transactionService.updateTransaction(id, transactionRequest);
     }
 
-
-//    @DeleteMapping("/delete/{id}")
-//    ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id) {
-//        transactionService.deleteTransactionById(id);
-//        return new ResponseEntity<>(
-//                new Response(ConstantsStatusCodes.success, "transaction deleted successfully", null, null, null),
-//                HttpStatus.OK);
-//    }
-
-
     @DeleteMapping("transactions/{id}")
     public String deleteTransaction(@PathVariable("id") Long id) throws CustomException {
         transactionService.deleteTransactionById(id);
