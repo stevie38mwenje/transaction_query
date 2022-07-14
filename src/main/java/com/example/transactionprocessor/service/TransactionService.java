@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface TransactionService {
     List<Transactions> getTransactions(Long userId);
 
-    Transactions createTransactions(TransactionRequest transactionRequest);
+    Transactions createTransactions(Transactions transactionRequest);
 
     List<Transactions> getAllTransactions();
 
@@ -21,7 +21,7 @@ public interface TransactionService {
     List<Transactions> findByDateBetweenAndUserId(Date from, Date to,Long userId);
 
 
-    Transactions updateTransaction(Long id, TransactionRequest transactionRequest);
+    Transactions updateTransaction(Long id, Transactions transactionRequest);
 
 
     double getUserBalance(Long id);

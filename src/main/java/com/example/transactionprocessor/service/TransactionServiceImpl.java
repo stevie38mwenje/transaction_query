@@ -40,22 +40,23 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public Transactions createTransactions(TransactionRequest transactionRequest) {
+    public Transactions createTransactions(Transactions transactionRequest) {
         logger.info("Persisting transaction data: {}", transactionRequest);
-        Transactions transaction = new Transactions();
-        transaction.setAmount(transactionRequest.getAmount());
-        transaction.setBank(transactionRequest.getBank());
-        transaction.setDate(date);
-        transaction.setMobile(transactionRequest.getMobile());
-        transaction.setName(transactionRequest.getName());
-        transaction.setUser(transactionRequest.getUser());
-        logger.info("Persisting transaction data: {}", transaction);
+        Transactions transaction = Transactions.builder()
+                         .amount(transactionRequest.getAmount())
+                         .bank(transactionRequest.getBank())
+                         .date(date)
+                         .mobile(transactionRequest.getMobile())
+                         .name(transactionRequest.getName())
+                         .user(transactionRequest.getUser())
+                         .build();
 
-        var amount  = transaction.getAmount();
-        var user = transaction.getUser();
-        updateBalance(user,amount);
+                    var amount  = transaction.getAmount();
+                    var user = transaction.getUser();
+                    updateBalance(user,amount);
 
-        return transactionsRepository.save(transaction);
+                    transactionsRepository.save(transaction);
+                    return transaction;
     }
 
     @Override
@@ -85,7 +86,7 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Override
-    public Transactions updateTransaction(Long id, TransactionRequest transactionRequest) {
+    public Transactions updateTransaction(Long id, Transactions transactionRequest) {
         Optional<Transactions> tran = transactionsRepository.findById(id);
         if (tran.isPresent()) {
             Transactions transaction = new Transactions();

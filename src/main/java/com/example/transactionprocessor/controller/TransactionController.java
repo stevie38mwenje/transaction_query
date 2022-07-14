@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
-@RequestMapping("/transactions")
+@RequestMapping("api/v1/")
 public class TransactionController {
     @Autowired
     private JWTUtility jwtUtility;
@@ -52,14 +52,14 @@ public class TransactionController {
         return  new JwtResponse(token);
     }
 
-    @GetMapping(value = "/{userId}")
+    @GetMapping(value = "transactions/{userId}")
     List<Transactions> getTransactions(@PathVariable(name = "userId") Long userId)
     {
         return transactionService.getTransactions(userId);
     }
 
 
-    @GetMapping("/search")
+    @GetMapping("transactions/search")
     List<Transactions> getNotificationbyDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefrom,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateto,
@@ -69,7 +69,7 @@ public class TransactionController {
     }
 
 
-    @GetMapping()
+    @GetMapping("transactions")
     List<Transactions> getAllTransactions()
     {
         return transactionService.getAllTransactions();
@@ -82,15 +82,16 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new_user);
     }
 
-    @PostMapping()
-    ResponseEntity<?> createTransactions(@RequestBody TransactionRequest transactionRequest)
+    @PostMapping("transactions")
+    ResponseEntity<?> createTransactions(@RequestBody Transactions transactionRequest)
     {
-        var new_transaction =  transactionService.createTransactions(transactionRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new_transaction);
+        var newTransaction =  transactionService.createTransactions(transactionRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newTransaction);
     }
 
-    @PutMapping("{id}")
-    public Transactions updateTransaction(@PathVariable("id") Long id, @RequestBody TransactionRequest transactionRequest) {
+
+    @PutMapping("transactions/{id}")
+    public Transactions updateTransaction(@PathVariable("id") Long id, @RequestBody Transactions transactionRequest) {
         return transactionService.updateTransaction(id, transactionRequest);
     }
 
@@ -104,7 +105,7 @@ public class TransactionController {
 //    }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("transactions/{id}")
     public String deleteTransaction(@PathVariable("id") Long id) throws CustomException {
         transactionService.deleteTransactionById(id);
         return "Transaction deleted successfully";

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -25,7 +26,7 @@ public class Transactions {
     private String name;
     private String mobile;
     private String bank;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date date;
     private Double amount;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
