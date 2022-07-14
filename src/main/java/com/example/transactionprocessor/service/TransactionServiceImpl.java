@@ -82,16 +82,7 @@ public class TransactionServiceImpl implements TransactionService{
         throw new UserNotFoundException("User not found");
     }
 
-    @Override
-    public void deleteTransactionById(Long id) {
-        Optional<Transactions> tran = transactionsRepository.findById(id);
-        if (tran.isPresent()) {
-            transactionsRepository.deleteById(id);
-        }else {
-            throw new CustomException("Transaction not found");
-        }
 
-    }
 
     @Override
     public Transactions updateTransaction(Long id, TransactionRequest transactionRequest) {
@@ -119,6 +110,17 @@ public class TransactionServiceImpl implements TransactionService{
             return balance;
         }
         throw new UserNotFoundException("user not found");
+    }
+
+
+    @Override
+    public Optional<Transactions> deleteTransactionById(Long id) throws CustomException {
+        Optional<Transactions> transaction = transactionsRepository.findById(id);
+        if (transaction.isEmpty()) {
+            throw new CustomException("Transaction not found");
+        }
+        transactionsRepository.deleteById(id);
+        return transaction;
     }
 
     private double updateBalance(User user, Double amount){

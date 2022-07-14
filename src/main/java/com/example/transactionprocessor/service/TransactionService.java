@@ -7,6 +7,7 @@ import com.example.transactionprocessor.model.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface TransactionService {
     List<Transactions> getTransactions(Long userId);
@@ -19,10 +20,11 @@ public interface TransactionService {
 
     List<Transactions> findByDateBetweenAndUserId(Date from, Date to,Long userId);
 
-    void deleteTransactionById(Long id);
 
     Transactions updateTransaction(Long id, TransactionRequest transactionRequest);
 
 
     double getUserBalance(Long id);
+
+    Optional<Transactions> deleteTransactionById(Long id);
 }

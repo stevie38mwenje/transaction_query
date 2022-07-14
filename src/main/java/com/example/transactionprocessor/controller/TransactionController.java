@@ -1,6 +1,7 @@
 package com.example.transactionprocessor.controller;
 
 import com.example.transactionprocessor.dto.*;
+import com.example.transactionprocessor.exception.CustomException;
 import com.example.transactionprocessor.model.Transactions;
 import com.example.transactionprocessor.service.TransactionService;
 import com.example.transactionprocessor.service.CustomUserDetailService;
@@ -94,13 +95,21 @@ public class TransactionController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id) {
+//    @DeleteMapping("/delete/{id}")
+//    ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id) {
+//        transactionService.deleteTransactionById(id);
+//        return new ResponseEntity<>(
+//                new Response(ConstantsStatusCodes.success, "transaction deleted successfully", null, null, null),
+//                HttpStatus.OK);
+//    }
+
+
+    @DeleteMapping("{id}")
+    public String deleteTransaction(@PathVariable("id") Long id) throws CustomException {
         transactionService.deleteTransactionById(id);
-        return new ResponseEntity<>(
-                new Response(ConstantsStatusCodes.success, "transaction deleted successfully", null, null, null),
-                HttpStatus.OK);
+        return "Transaction deleted successfully";
     }
+
 
     @GetMapping("/balance/{id}")
     ResponseEntity<Response> getUserbalance(@PathVariable("id") Long id) {
